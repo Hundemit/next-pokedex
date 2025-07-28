@@ -18,6 +18,7 @@ import {
   Pickaxe, // Ground
   Eye, // Psychic
   type LucideIcon,
+  Square,
 } from "lucide-react";
 
 export interface PokemonType {
@@ -27,6 +28,11 @@ export interface PokemonType {
 }
 
 export const pokemonTypeIcons: Record<string, PokemonType> = {
+  all: {
+    name: "All",
+    icon: Square,
+    color: "transparent",
+  },
   normal: {
     name: "Normal",
     icon: Circle,

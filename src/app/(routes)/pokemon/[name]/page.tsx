@@ -55,7 +55,6 @@ export default function PokemonDetailPage({ params }: { params: Promise<{ name: 
                 y: { type: "spring", visualDuration: 0.4, delay: 0.4, bounce: 0.5 },
               }}>
               <div className=" flex flex-col items-center md:flex-row gap-20 justify-between  border dark:border-gray-700 rounded-xl mx-4 md:mx-0 ">
-                {/* PICTURE */}
                 {isLoading && (
                   <div className="w-80 h-80 p-4  flex justify-center items-center  object-contain">
                     <div className="animate-pulse dark:text-blue-100 dark:bg-slate-700  bg-blue-50  text-blue-700 rounded-full h-64 w-64"></div>
@@ -71,14 +70,12 @@ export default function PokemonDetailPage({ params }: { params: Promise<{ name: 
                   />
                 )}
 
-                {/* DETAILS */}
                 <div className="max-w-lg w-full px-4 ">
                   <div className="px-4 sm:px-0">
                     <div className="flex gap-2 items-center">
                       <h3 className="text-2xl font-semibold leading-7 text-gray-900 dark:text-white">{pokemon && pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
-                      <span className="bg-gray-300 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 h-fit rounded dark:bg-gray-700 dark:text-gray-300">#{pokemon?.id}</span>
+                      <span className="bg-gray-300 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 h-fit rounded dark:bg-gray-700 dark:text-gray-300">#{pokemon.id}</span>
                     </div>
-                    {/* TYP */}
                     <div className="flex flex-wrap gap-2 mt-4">
                       {!isLoading &&
                         pokemon.types.map((type: Pokemon["types"][0]) => (
@@ -118,7 +115,7 @@ export default function PokemonDetailPage({ params }: { params: Promise<{ name: 
           <h1 className="text-2xl font-bold">Pokemon not found</h1>
           <Link
             href={{
-              pathname: "/",
+              pathname: "/pokedex",
             }}
             className="font-bold py-3">
             <Button>Go back to home</Button>

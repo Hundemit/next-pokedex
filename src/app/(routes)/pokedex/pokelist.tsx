@@ -11,37 +11,26 @@ import { log } from "console";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { redirect, useRouter } from "next/navigation";
+import { useStore } from "@/store/store";
 
 export interface PokemonApiResponse {
   results: Pokemon[];
 }
 
-const Pokelist = ({ search }: { search: string }) => {
+const Pokelist = () => {
+  const { type, search } = useStore();
   const PokemonPerScreen = 16;
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(81);
 
-  const { data, isLoading, mutate } = useAllPokemon<PokemonApiResponse>();
-  const router = useRouter();
+  const { data, isLoading, mutate } = useAllPokemon<PokemonApiResponse>(type);
 
-  const filteredPokemon = useMemo(() => filterPokemonByName(data, search), [data, search]);
+  const filteredPokemon = useMemo(() => filterPokemonByName(data, search), [search, data]);
 
   useEffect(() => {
     setPage(1);
     setTotalPages(Math.ceil(filteredPokemon.length / PokemonPerScreen));
   }, [search, filteredPokemon.length, PokemonPerScreen]);
-
-  console.log("totalPages");
-  console.log(totalPages);
-  console.log("--------------------------------");
-
-  console.log("filteredPokemon Hier unter");
-
-  console.log(filteredPokemon);
-  console.log("--------------------------------");
-  console.log("getPokemonPage Hierunter");
-  console.log(getPokemonPage(filteredPokemon, page, PokemonPerScreen));
-  console.log("--------------------------------");
 
   return (
     <>
@@ -57,8 +46,8 @@ const Pokelist = ({ search }: { search: string }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.4,
-                  delay: 0.4 * (index * 0.3),
-                  y: { type: "spring", visualDuration: 0.4, delay: 0.4 * (index * 0.3), bounce: 0.5 },
+                  delay: 0.1 * (index * 0.4),
+                  y: { type: "spring", visualDuration: 0.4, delay: 0.1 * (index * 0.4), bounce: 0.5 },
                 }}>
                 <PokeCard key={pokemon.name} name={pokemon.name} />
               </motion.div>

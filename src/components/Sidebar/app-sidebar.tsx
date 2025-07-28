@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Frame, Map, PieChart, LoaderPinwheel } from "lucide-react";
 
-import { NavTrainer } from "@/components/Sidebar/nav-trainer";
 import { NavPokemonTypes } from "@/components/Sidebar/nav-pokemon-types";
 import { NavUser } from "@/components/Sidebar/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
@@ -17,24 +16,6 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
     link: "https://janhindemit.de",
   },
-
-  projects: [
-    {
-      name: "Ash Ketchum",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Misty",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Rocky Balboa",
-      url: "#",
-      icon: Map,
-    },
-  ],
 
   pokemonTypes: getAllPokemonTypes().map((type) => ({
     name: type.name,
@@ -51,7 +32,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/pokedex">
+              <Link href="/landing">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <LoaderPinwheel className="size-4" />
                 </div>
@@ -64,8 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavTrainer projects={data.projects} />
-        <NavPokemonTypes pokemonTypes={data.pokemonTypes} />
+        <NavPokemonTypes pokemonTypes={getAllPokemonTypes()} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

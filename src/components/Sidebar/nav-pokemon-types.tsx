@@ -1,37 +1,49 @@
 "use client";
 
-import { type LucideIcon } from "lucide-react";
+import { X, type LucideIcon } from "lucide-react";
 
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { log } from "console";
+import { useStore } from "@/store/store";
+import { useState } from "react";
 
 export function NavPokemonTypes({
   pokemonTypes,
 }: {
   pokemonTypes: {
     name: string;
-    url: string;
     icon: LucideIcon;
     color: string;
   }[];
 }) {
-  const { isMobile } = useSidebar();
-
+  const { type, setType } = useStore();
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Pokemon Types</SidebarGroupLabel>
       <SidebarMenu>
-        {pokemonTypes.map((type) => (
-          <SidebarMenuItem key={type.name}>
+        {pokemonTypes.map((t) => (
+          <SidebarMenuItem key={t.name}>
             <SidebarMenuButton asChild>
-              <a
-                href={type.url}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = type.color)}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
-                style={{ transition: "background-color 0.2s" }}>
-                <type.icon />
-                <span>{type.name}</span>
-              </a>
+              <div
+                role="button"
+                onClick={() => {
+                  setType(t.name);
+                }}
+                style={{ "--type-color": t.color } as React.CSSProperties}
+                className={`flex items-center gap-2 rounded transition-colors duration-200 ${type === t.name ? "bg-[var(--type-color)]!" : "hover:bg-[var(--type-color)]!"}`}>
+                <t.icon />
+                <span>{t.name}</span>
+                {type === t.name && (
+                  <div
+                    className="flex items-center gap-2 ml-auto cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setType("");
+                    }}>
+                    <X className="size-4 " />
+                  </div>
+                )}
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
