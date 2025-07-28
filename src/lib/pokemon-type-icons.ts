@@ -23,105 +23,125 @@ import {
 
 export interface PokemonType {
   name: string;
+  buttonName: string;
   icon: LucideIcon;
   color: string;
 }
 
 export const pokemonTypeIcons: Record<string, PokemonType> = {
   all: {
-    name: "All",
+    buttonName: "All Pokémon",
+    name: "",
     icon: Square,
-    color: "transparent",
+    color: "#A8A8A8", // Grau
   },
   normal: {
+    buttonName: "Normal",
     name: "Normal",
     icon: Circle,
-    color: "#A8A878",
+    color: "#98986A", // 5% dunkler als #A8A878
   },
   fire: {
+    buttonName: "Fire",
     name: "Fire",
     icon: Flame,
-    color: "#F08030",
+    color: "#D8732B", // 5% dunkler als #F08030
   },
   water: {
+    buttonName: "Water",
     name: "Water",
     icon: Droplets,
-    color: "#6890F0",
+    color: "#5E82D8", // 5% dunkler als #6890F0
   },
   electric: {
+    buttonName: "Electric",
     name: "Electric",
     icon: Zap,
-    color: "#F8D030",
+    color: "#DFBC2B", // 5% dunkler als #F8D030
   },
   grass: {
+    buttonName: "Grass",
     name: "Grass",
     icon: Leaf,
-    color: "#78C850",
+    color: "#6CAF48", // 5% dunkler als #78C850
   },
   ice: {
+    buttonName: "Ice",
     name: "Ice",
     icon: Snowflake,
-    color: "#98D8D8",
+    color: "#8AC2C2", // 5% dunkler als #98D8D8
   },
   fighting: {
+    buttonName: "Fighting",
     name: "Fighting",
     icon: Sword,
-    color: "#C03028",
+    color: "#AC2923", // 5% dunkler als #C03028
   },
   poison: {
+    buttonName: "Poison",
     name: "Poison",
     icon: Skull,
-    color: "#A040A0",
+    color: "#8F3890", // 5% dunkler als #A040A0
   },
   ground: {
+    buttonName: "Ground",
     name: "Ground",
     icon: Pickaxe,
-    color: "#E0C068",
+    color: "#CBB35E", // 5% dunkler als #E0C068
   },
   flying: {
+    buttonName: "Flying",
     name: "Flying",
     icon: Bird,
-    color: "#A890F0",
+    color: "#977ED8", // 5% dunkler als #A890F0
   },
   psychic: {
+    buttonName: "Psychic",
     name: "Psychic",
     icon: Eye,
-    color: "#F85888",
+    color: "#DF4E78", // 5% dunkler als #F85888
   },
   bug: {
+    buttonName: "Bug",
     name: "Bug",
     icon: Bug,
-    color: "#A8B820",
+    color: "#969E1C", // 5% dunkler als #A8B820
   },
   rock: {
+    buttonName: "Rock",
     name: "Rock",
     icon: Mountain,
-    color: "#B8A038",
+    color: "#A08C32", // 5% dunkler als #B8A038
   },
   ghost: {
+    buttonName: "Ghost",
     name: "Ghost",
     icon: Ghost,
-    color: "#705898",
+    color: "#635082", // 5% dunkler als #705898
   },
   dragon: {
+    buttonName: "Dragon",
     name: "Dragon",
     icon: Crown,
-    color: "#7038F8",
+    color: "#6232DF", // 5% dunkler als #7038F8
   },
   dark: {
+    buttonName: "Dark",
     name: "Dark",
     icon: Moon,
-    color: "#705848",
+    color: "#635042", // 5% dunkler als #705848
   },
   steel: {
+    buttonName: "Steel",
     name: "Steel",
     icon: Shield,
-    color: "#B8B8D0",
+    color: "#A3A3B6", // 5% dunkler als #B8B8D0
   },
   fairy: {
+    buttonName: "Fairy",
     name: "Fairy",
     icon: Sparkles,
-    color: "#EE99AC",
+    color: "#D48899", // 5% dunkler als #EE99AC
   },
 };
 
