@@ -26,13 +26,11 @@ Ein modernes, responsives Pokédex-Web-App gebaut mit Next.js und TypeScript. En
 ### **Styling & UI**
 
 - **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS Framework
-- **[Radix UI](https://www.radix-ui.com/)** - Unstyled, accessible UI Primitives
+- **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable Components built with Radix UI and Tailwind CSS
 - **[Lucide React](https://lucide.dev/)** - Beautiful & consistent Icon Library
-- **[React Fitty](https://github.com/wix/react-fitty)** - Text-fitting Library
 
 ### **Animations**
 
-- **[Framer Motion](https://www.framer.com/motion/)** - Production-ready Motion Library
 - **[Motion/React](https://motion.dev/)** - Lightweight Animation Library
 
 ### **State Management & Data Fetching**
@@ -90,22 +88,28 @@ yarn dev
 ```
 pokedex/
 ├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── (routes)/
-│   │   │   ├── pokedex/       # Pokédex Hauptseite
-│   │   │   ├── pokemon/       # Einzelne Pokémon Details
-│   │   │   └── landing/       # Landing Page
-│   │   ├── globals.css        # Globale Styles
-│   │   └── layout.tsx         # Root Layout
-│   ├── components/            # Wiederverwendbare Komponenten
-│   │   ├── ui/               # UI Primitives (Buttons, Cards, etc.)
-│   │   └── Sidebar/          # Sidebar Navigation
-│   ├── lib/                  # Utility Functions & Services
-│   ├── store/                # Zustand State Management
-│   ├── types/                # TypeScript Type Definitionen
-│   └── hooks/                # Custom React Hooks
-├── public/                   # Statische Assets
-└── components.json           # Shadcn/ui Konfiguration
+│   ├── app/
+│   │   ├── (routes)/                       # Route Grouping
+│   │   │   ├── landing/                    # Landing Page
+│   │   │   │   └── page.tsx
+│   │   │   └── pokedex/                    # Pokédex Routes
+│   │   │       ├── page.tsx               # Pokémon Liste
+│   │   │       └── [name]/                 # Dynamic Route
+│   │   │           └── page.tsx            # Pokémon Details
+│   │   ├── globals.css                     # Global Styles
+│   │   └── layout.tsx                      # Root Layout
+│   ├── components/                         # UI Components
+│   │   ├── ui/                            # shadcn/ui Components
+│   │   ├── pokedex/                       # pokedex Components
+│   │   └── Sidebar/                       # Navigation Components
+│   ├── lib/                               # Utils & Services
+│   │   ├── pokemon-type-icons.ts          # Type Icons & Colors
+│   │   └── utils.ts                       # API Calls & Helpers
+│   ├── store/                             # Zustand State
+│   ├── types/                             # TypeScript Types
+│   └── hooks/                             # Custom Hooks
+├── public/                                # Static Assets
+└── components.json                        # shadcn/ui Config
 ```
 
 ## 🎨 UI Komponenten
@@ -113,7 +117,6 @@ pokedex/
 Das Projekt nutzt eine Kombination aus:
 
 - **Custom Components** für Pokémon-spezifische UI
-- **Radix UI Primitives** für Barrierefreiheit
 - **Shadcn/ui** Pattern für konsistente Komponenten
 - **Tailwind CSS** für schnelles, responsives Styling
 
@@ -123,7 +126,6 @@ Das Projekt nutzt eine Kombination aus:
 
 - Live-Suche nach Pokémon-Namen
 - Typ-basierte Filterung
-- Kombinierte Suche und Filter
 
 ### 📱 Responsive Design
 
@@ -142,7 +144,6 @@ Das Projekt nutzt eine Kombination aus:
 
 - Smooth Page Transitions
 - Loading States mit Skeleton UI
-- Micro-Interactions für bessere UX
 - Spring-basierte Animationen
 
 ## 🌐 API Integration
@@ -154,25 +155,6 @@ Das Projekt nutzt die **PokéAPI** (https://pokeapi.co/) für:
 - Typ-Informationen
 - Offizielle Artwork Images
 
-## 🤝 Contributing
-
-1. Fork das Repository
-2. Erstelle einen Feature Branch (`git checkout -b feature/amazing-feature`)
-3. Committe deine Änderungen (`git commit -m 'Add amazing feature'`)
-4. Push zum Branch (`git push origin feature/amazing-feature`)
-5. Öffne einen Pull Request
-
-## 📄 Lizenz
-
-Dieses Projekt ist unter der MIT Lizenz verfügbar. Siehe [LICENSE](LICENSE) für weitere Details.
-
-## 🙏 Danksagungen
-
-- **PokéAPI** für die umfassende Pokémon Datenbank
-- **The Pokémon Company** für die wunderbaren Pokémon Designs
-- **Next.js Team** für das ausgezeichnete Framework
-- **Vercel** für das Hosting und die Tools
-
 ---
 
-**Gemacht mit ❤️ und ⚡ von [Dein Name]**
+**Gemacht mit ❤️ und ⚡ von Jan Hindemit**
