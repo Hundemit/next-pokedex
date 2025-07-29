@@ -7,7 +7,7 @@ import { Pokemon } from "@/types/pokemon";
 import { Button } from "@/components/ui/button";
 import Countdown from "react-countdown";
 import { useRouter } from "next/navigation";
-import { PokemonDetailsLoading, PokemonDetails } from "../../../../components/pokedex/poke-details";
+import { PokemonDetailsLoading, PokemonDetails } from "../../../../components/Pokedex/poke-details";
 import { useStore } from "@/store/store";
 
 export default function PokemonDetailPage({ params }: { params: Promise<{ name: string }> }) {

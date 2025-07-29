@@ -1,8 +1,8 @@
 "use client";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import PokedexHeader from "@/components/pokedex/pokedex-header";
+import { AppSidebar } from "@/components/Sidebar/app-sidebar";
+import PokedexHeader from "@/components/Pokedex/pokedex-header";
 
 export default function Layout({
   children,
