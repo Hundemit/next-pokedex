@@ -2,7 +2,7 @@
 
 Ein modernes, responsives Pokédex-Web-App gebaut mit Next.js und TypeScript. Entdecke alle Pokémon mit einer benutzerfreundlichen Oberfläche, fortgeschrittener Suche und eleganten Animationen.
 
-![Pokédex Preview](public/img/pokeball.png)
+![Pokédex Preview](public/img/screenshot.png)
 
 ## ✨ Features
 
