@@ -3,76 +3,21 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import type { Pokemon } from "@/types/pokemon";
-import type { PokemonApiResponse } from "@/app/(routes)/pokedex/pokelist";
+import type { PokemonApiResponse } from "@/app/(routes)/pokedex/poke-list-type";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function getPokemon(name: string) {
-  try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-
-    if (!response.ok) {
-      // Handle non-successful HTTP responses, e.g., 404 Not Found
-      throw new Error(`Failed to fetch data for ${name}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error: any) {
-    // Handle network errors or other exceptions
-    throw new Error(`An error occurred while fetching data: ${error.message}`);
-  }
-}
-
-export function getPokemonPage(Pokemons: Pokemon[], page: number, limit: number) {
-  const start = (page - 1) * limit;
-  const end = start + limit;
-
-  return Pokemons.slice(start, end);
-}
-
-export function usePokemonPage<T>(page: number, limit: number) {
-  const { data, isLoading, mutate } = useSWR<T>(`pokemon-page-${page}`, async () => {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${page * limit}`);
-
-    return await response.json();
-  });
-
-  return { data, isLoading, mutate };
-}
-
-export async function getAllPokemon() {
-  try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`);
-
-    if (!response.ok) {
-      // Handle non-successful HTTP responses, e.g., 404 Not Found
-      throw new Error(`Failed to fetch data for ${name}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error: any) {
-    // Handle network errors or other exceptions
-    throw new Error(`An error occurred while fetching data: ${error.message}`);
-  }
-}
-
-export function useAllPokemon<T>(type: string) {
+export function usePokemonList<PokemonApiResponse>(type: string) {
   const key = ["all-pokemon", type] as const;
 
-  const { data, isLoading, mutate } = useSWR<T>(key, async () => {
+  const { data, isLoading, mutate } = useSWR<PokemonApiResponse>(key, async () => {
     try {
-      if (type !== "") {
-        return await getAllPokemonByType(type);
-      } else {
-        return await getAllPokemon();
-      }
+      return await getAllPokemon(type);
     } catch (error) {
       if (error instanceof Error && error.cause === "404") {
-        return null;
+        return { results: [] };
       } else {
         throw error;
       }
@@ -82,9 +27,14 @@ export function useAllPokemon<T>(type: string) {
   return { data, isLoading, mutate };
 }
 
-export async function getAllPokemonByType(type: string) {
+const API = "https://pokeapi.co/api/v2";
+
+export async function getAllPokemon(type: string) {
+  const urlallPokemon = `${API}/pokemon?limit=100000&offset=0`;
+  const urlAllPokemonByType = `${API}/type/${type}`;
+
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+    const response = await fetch(type === "all" ? urlallPokemon : urlAllPokemonByType);
 
     if (!response.ok) {
       // Handle non-successful HTTP responses, e.g., 404 Not Found
@@ -93,15 +43,14 @@ export async function getAllPokemonByType(type: string) {
 
     const data = await response.json();
 
-    // Mappe data.pokemon → results: Array<{name, url}>
-    data.results = data.pokemon.map((entry: { pokemon: { name: string; url: string } }) => ({
-      name: entry.pokemon.name,
-      url: entry.pokemon.url,
-    }));
-
+    if (type !== "all") {
+      data.results = data.pokemon.map((entry: { pokemon: { name: string; url: string } }) => ({
+        name: entry.pokemon.name,
+        url: entry.pokemon.url,
+      }));
+    }
     return data;
   } catch (error: any) {
-    // Handle network errors or other exceptions
     throw new Error(`An error occurred while fetching data: ${error.message}`);
   }
 }
@@ -122,32 +71,25 @@ export function usePokemon<T>(name: string) {
   return { data, isLoading, mutate };
 }
 
-export function filterPokemonByName(data: PokemonApiResponse | undefined, name: string) {
-  if (!data || !data.results) {
-    return [];
-  }
+export async function getPokemon(name: string) {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
 
-  return data.results.filter((pokemon: Pokemon) => {
-    if (!name) {
-      return true;
+    if (!response.ok) {
+      // Handle non-successful HTTP responses, e.g., 404 Not Found
+      throw new Error(`Failed to fetch data for ${name}`);
     }
-    return pokemon.name.toLowerCase().includes(name.toLowerCase());
-  });
+
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    // Handle network errors or other exceptions
+    throw new Error(`An error occurred while fetching data: ${error.message}`);
+  }
 }
 
-export function filterPokemonByType(data: PokemonApiResponse | undefined, type: string): Pokemon[] {
-  if (!data) {
-    return [];
-  }
+export function filterPokemonByName(data: PokemonApiResponse | undefined, name: string): Pokemon[] {
+  if (!data) return [];
 
-  // Wenn kein Typ angegeben ist, alle Pokémon zurückgeben
-  if (!type) {
-    return data.results;
-  }
-
-  const typeLower = type.toLowerCase();
-
-  return data.results.filter((pokemon: Pokemon) => {
-    return pokemon.types.some((t) => t.type.name.toLowerCase() === typeLower);
-  });
+  return data.results.filter((pokemon: Pokemon) => pokemon.name.toLowerCase().includes(name.toLowerCase()));
 }

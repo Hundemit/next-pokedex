@@ -6,7 +6,7 @@ import { useStore } from "@/store/store";
 import { PokemonType } from "@/lib/pokemon-type-icons";
 
 export function NavPokemonTypes({ pokemonTypes }: { pokemonTypes: PokemonType[] }) {
-  const { type, setType } = useStore();
+  const { type, setType, setSearch } = useStore();
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Pokemon Types</SidebarGroupLabel>
@@ -19,18 +19,22 @@ export function NavPokemonTypes({ pokemonTypes }: { pokemonTypes: PokemonType[] 
                 role="button"
                 onClick={() => {
                   setType(t.name);
+                  setSearch("");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
                 style={{ "--type-color": `${t.color}26` } as React.CSSProperties}
                 className={`flex items-center gap-2 rounded transition-colors duration-200 ${type === t.name ? "bg-[var(--type-color)]!" : "hover:bg-[var(--type-color)]!"}`}>
                 <t.icon />
                 <span>{t.buttonName}</span>
                 {/* CLOSE BUTTON */}
-                {type === t.name && t.name !== "" && (
+                {type === t.name && t.name !== "all" && (
                   <div
                     className="flex items-center gap-2 ml-auto cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setType("");
+                      setType("all");
+                      setSearch("");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
                     }}>
                     <X style={{ "--type-color": t.color } as React.CSSProperties} color="var(--type-color)" className="size-4 " />
                   </div>

@@ -1,2 +1,2 @@
-GET https://pokeapi.co/api/v2/pokemon/ditto
+GET https://pokeapi.co/api/v2/pokemon?limit=16&offset=15
 

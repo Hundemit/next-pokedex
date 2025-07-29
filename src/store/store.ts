@@ -9,7 +9,7 @@ export interface Store {
 
 export const useStore = create<Store>((set) => ({
   search: "",
-  type: "",
+  type: "all",
   setSearch: (search: string) => set({ search }),
   setType: (type: string) => set({ type }),
 }));

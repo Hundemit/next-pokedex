@@ -31,7 +31,7 @@ export interface PokemonType {
 export const pokemonTypeIcons: Record<string, PokemonType> = {
   all: {
     buttonName: "All Pokémon",
-    name: "",
+    name: "all",
     icon: Square,
     color: "#A8A8A8", // Grau
   },
