@@ -154,7 +154,3 @@ Das Projekt nutzt die **PokéAPI** (https://pokeapi.co/) für:
 - Detaillierte Statistiken
 - Typ-Informationen
 - Offizielle Artwork Images
-
----
-
-**Gemacht mit ❤️ und ⚡ von Jan Hindemit**
