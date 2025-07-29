@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import { Pokemon } from "@/types/pokemon";
 import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
 import Image from "next/image";
 import { PokeChart } from "./poke-chart";
+import Link from "next/link";
+import { useStore } from "@/store/store";
 
 export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
+  const { setType, setPokemonName } = useStore();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,7 +18,7 @@ export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
         y: { type: "spring", visualDuration: 0.4, delay: 0, bounce: 0.5 },
       }}
       id="pokemon-details"
-      className="px-12 py-6 flex flex-col md:flex-row  items-center  md:gap-20 justify-center border dark:border-gray-700 rounded-xl mx-4 md:mx-0  ">
+      className="px-12 py-6 flex flex-col md:flex-row  items-center  md:gap-20 justify-center  rounded-xl mx-4 md:mx-0  ">
       <div id="pokemon-details-left" className="flex flex-col gap-4 max-w-sm w-full items-center">
         <Image
           className={`object-contain ${!pokemon.sprites.other["official-artwork"].front_default && "rounded-full bg-gray-200 dark:bg-sidebar w-64 h-64"}`}
@@ -30,18 +32,23 @@ export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
             <h3 className="text-2xl font-semibold leading-7 text-gray-900 dark:text-white">{pokemon && pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
             <span className="bg-gray-300 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 h-fit rounded dark:bg-gray-700 dark:text-gray-300">#{pokemon.id}</span>
           </div>
-          <div className="flex flex-wrap gap-2 mt-4">
-            {pokemon.types.map((type: Pokemon["types"][0]) => (
-              <Badge
+          <div className="flex flex-wrap gap-1 mt-4">
+            {pokemon.types.map((type: { type: { name: string } }) => (
+              <Link
+                href={`/pokedex`}
+                onClick={() => {
+                  setType(pokemonTypeIcons[type.type.name]);
+                  setPokemonName("");
+                }}
                 style={{
                   backgroundColor: `${pokemonTypeIcons[type.type.name].color}28`,
                   color: `${pokemonTypeIcons[type.type.name].color}`,
                   border: `1px solid ${pokemonTypeIcons[type.type.name].color}`,
                 }}
-                key={type.type.name}
-                variant={"secondary"}>
+                className="text-xs font-medium px-2.5 py-0.5 rounded-md hover:-translate-y-1 transition-all duration-300"
+                key={type.type.name}>
                 {type.type.name}
-              </Badge>
+              </Link>
             ))}
           </div>
         </div>
@@ -63,7 +70,7 @@ export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
         </div>
       </div>
 
-      <div id="pokemon-details-right" className="  max-w-xl w-full">
+      <div id="pokemon-details-right" className="max-w-xl w-full">
         <PokeChart pokemon={pokemon} />
       </div>
     </motion.div>

@@ -22,7 +22,7 @@ export function PokeChart({ pokemon }: { pokemon: Pokemon }) {
   }));
 
   return (
-    <Card className="bg-transparent border-none">
+    <Card className="bg-transparent border-none shadow-none">
       <CardContent className="p-0">
         <ChartContainer config={chartConfig} className="mx-auto aspect-square ">
           <RadarChart data={chartData}>

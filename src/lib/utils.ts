@@ -49,6 +49,7 @@ export async function getAllPokemon(type: string) {
         url: entry.pokemon.url,
       }));
     }
+    console.log(data);
     return data;
   } catch (error: any) {
     throw new Error(`An error occurred while fetching data: ${error.message}`);

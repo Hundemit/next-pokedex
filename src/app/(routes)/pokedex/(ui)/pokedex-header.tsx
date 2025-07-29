@@ -1,13 +1,16 @@
+"use client";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Darkmodebutton } from "@/components/darkmodebutton";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { SearchForm } from "@/app/(routes)/pokedex/(ui)/search-form";
 import { useStore } from "@/store/store";
+import { useRouter } from "next/navigation";
+import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
 
 const PokedexHeader = ({ className }: { className?: string }) => {
-  const { type, setType } = useStore();
-
+  const { type, setType, pokemonName, setPokemonName, setPage } = useStore();
+  const router = useRouter();
   return (
     <header className={`${className}`}>
       <div className="flex flex-wrap items-center gap-4 w-full">
@@ -19,16 +22,33 @@ const PokedexHeader = ({ className }: { className?: string }) => {
               <BreadcrumbLink
                 className="cursor-pointer hover:underline"
                 onClick={() => {
-                  setType("all");
+                  setType(pokemonTypeIcons.all);
+                  setPokemonName("");
+                  setPage(1);
+                  router.push(`/pokedex`);
                 }}>
                 Pokedèx
               </BreadcrumbLink>
             </BreadcrumbItem>
-            {type !== "all" && (
+            {type.name !== "all" && type.name !== undefined && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbLink
+                  className="cursor-pointer hover:underline"
+                  onClick={() => {
+                    setPokemonName("");
+                    setPage(1);
+                    router.push(`/pokedex`);
+                  }}>
+                  <BreadcrumbPage>{type.buttonName}</BreadcrumbPage>
+                </BreadcrumbLink>
+              </>
+            )}
+            {pokemonName !== "" && (
               <>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{type}</BreadcrumbPage>
+                  <BreadcrumbPage>{pokemonName}</BreadcrumbPage>
                 </BreadcrumbItem>
               </>
             )}
