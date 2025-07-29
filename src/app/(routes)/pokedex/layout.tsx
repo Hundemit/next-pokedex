@@ -2,7 +2,7 @@
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import PokedexHeader from "../../../components/pokedex/pokedex-header";
+import PokedexHeader from "@/components/pokedex/pokedex-header";
 
 export default function Layout({
   children,
