@@ -4,7 +4,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Darkmodebutton } from "@/components/darkmodebutton";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
-import { SearchForm } from "@/components/Pokedex/search-form";
+import { SearchForm } from "@/components/pokedex/search-form";
 import { useStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";

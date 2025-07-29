@@ -3,7 +3,7 @@
 import { useMemo, useEffect, useRef } from "react";
 import { ChevronRightIcon } from "lucide-react";
 
-import { PokeCard, LoadingPokeCard } from "@/components/Pokedex/poke-card";
+import { PokeCard, LoadingPokeCard } from "@/components/pokedex/poke-card";
 import { Pokemon } from "@/types/pokemon";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "motion/react";
