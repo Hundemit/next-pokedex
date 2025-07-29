@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { Label } from "../../../../components/ui/label";
+import { Label } from "../ui/label";
 import { useStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";

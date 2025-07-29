@@ -3,8 +3,8 @@
 import * as React from "react";
 import { Frame, Map, PieChart, LoaderPinwheel } from "lucide-react";
 
-import { NavPokemonTypes } from "@/components/Sidebar/nav-pokemon-types";
-import { NavUser } from "@/components/Sidebar/nav-user";
+import { NavPokemonTypes } from "@/components/sidebar/nav-pokemon-types";
+import { NavUser } from "@/components/sidebar/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { getAllPokemonTypes } from "@/lib/pokemon-type-icons";
