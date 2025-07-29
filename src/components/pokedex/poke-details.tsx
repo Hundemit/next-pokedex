@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Pokemon } from "@/types/pokemon";
 import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";

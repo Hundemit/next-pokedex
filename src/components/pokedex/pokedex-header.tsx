@@ -1,4 +1,5 @@
 "use client";
+
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Darkmodebutton } from "@/components/darkmodebutton";
 import { Separator } from "@/components/ui/separator";

@@ -22,3 +22,7 @@ export interface Pokemon {
     };
   };
 }
+
+export interface PokemonApiResponse {
+  results: Pokemon[];
+}

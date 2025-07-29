@@ -18,7 +18,7 @@ export default function PokemonDetailPage({ params }: { params: Promise<{ name: 
 
   useEffect(() => {
     setPokemonName(name.charAt(0).toUpperCase() + name.slice(1));
-  }, [name]);
+  }, [name, setPokemonName]);
 
   return (
     <div className="min-h-[70vh] h-full">

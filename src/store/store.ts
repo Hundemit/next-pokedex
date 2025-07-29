@@ -22,3 +22,16 @@ export const useStore = create<Store>((set) => ({
   setPokemonName: (pokemonName: string) => set({ pokemonName }),
   setPage: (page: number) => set({ page }),
 }));
+
+export interface MotionStore {
+  defaultDelay: number;
+  defaultDuration: number;
+  setDefaultDelay: (defaultDelay: number) => void;
+}
+
+export const useMotionStore = create<MotionStore>((set) => ({
+  defaultDelay: 0.3,
+  defaultDuration: 0.3,
+  setDefaultDelay: (defaultDelay: number) => set({ defaultDelay }),
+  setDefaultDuration: (defaultDuration: number) => set({ defaultDuration }),
+}));

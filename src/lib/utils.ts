@@ -2,12 +2,13 @@ import useSWR from "swr";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import type { Pokemon } from "@/types/pokemon";
-import type { PokemonApiResponse } from "@/app/(routes)/pokedex/poke-list-type";
+import type { Pokemon, PokemonApiResponse } from "@/types/pokemon";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+const API = "https://pokeapi.co/api/v2";
 
 export function usePokemonList<PokemonApiResponse>(type: string) {
   const key = ["all-pokemon", type] as const;
@@ -26,8 +27,6 @@ export function usePokemonList<PokemonApiResponse>(type: string) {
 
   return { data, isLoading, mutate };
 }
-
-const API = "https://pokeapi.co/api/v2";
 
 export async function getAllPokemon(type: string) {
   const urlallPokemon = `${API}/pokemon?limit=100000&offset=0`;
@@ -49,10 +48,12 @@ export async function getAllPokemon(type: string) {
         url: entry.pokemon.url,
       }));
     }
-    console.log(data);
     return data;
-  } catch (error: any) {
-    throw new Error(`An error occurred while fetching data: ${error.message}`);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`An error occurred while fetching data: ${error.message}`);
+    }
+    throw new Error("An unknown error occurred while fetching data");
   }
 }
 
@@ -83,9 +84,11 @@ export async function getPokemon(name: string) {
 
     const data = await response.json();
     return data;
-  } catch (error: any) {
-    // Handle network errors or other exceptions
-    throw new Error(`An error occurred while fetching data: ${error.message}`);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`An error occurred while fetching data: ${error.message}`);
+    }
+    throw new Error("An unknown error occurred while fetching data");
   }
 }
 
