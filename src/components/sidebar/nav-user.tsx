@@ -2,7 +2,9 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { useSidebarStore } from "@/store/store";
 import Link from "next/link";
+import { useState } from "react";
 
 export function NavUser({
   user,
@@ -17,7 +19,7 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground" asChild>
+        <SidebarMenuButton size="lg" className="animate-pulse" asChild>
           <Link target="_blank" href={user.link}>
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarImage className="hover:animate-spin" src={user.avatar} alt={user.name} />

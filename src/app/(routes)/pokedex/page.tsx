@@ -44,20 +44,17 @@ const Pokelist = () => {
         {data &&
           filteredPokemon &&
           filteredPokemon.slice(0, page * PAGE_SIZE).map((pokemon: Pokemon, index: number) => (
-            <>
-              {/* <SkeletonPokeCard /> */}
-              <motion.div
-                key={pokemon.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: defaultDuration,
-                  delay: defaultDelay + (index > 30 ? 0 : index * 0.005),
-                  y: { type: "spring", visualDuration: defaultDuration, delay: defaultDelay + (index > 30 ? 0 : index * 0.005), bounce: 0.5 },
-                }}>
-                <PokeCard key={pokemon.name} name={pokemon.name} />
-              </motion.div>
-            </>
+            <motion.div
+              key={pokemon.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: defaultDuration,
+                delay: defaultDelay + (index > 30 ? 0 : index * 0.005),
+                y: { type: "spring", visualDuration: defaultDuration, delay: defaultDelay + (index > 30 ? 0 : index * 0.005), bounce: 0.5 },
+              }}>
+              <PokeCard key={pokemon.name} name={pokemon.name} />
+            </motion.div>
           ))}
 
         {filteredPokemon && filteredPokemon.length === 0 && !isLoading && (
