@@ -20,7 +20,7 @@ export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
         y: { type: "spring", visualDuration: 0.4, delay: 0, bounce: 0.5 },
       }}
       id="pokemon-details"
-      className="px-12 py-6 flex flex-col md:flex-row  items-center  md:gap-20 justify-center  rounded-xl mx-4 md:mx-0  ">
+      className="sm:px-12 px-4 py-6 flex flex-col md:flex-row  items-center  md:gap-20 justify-center  rounded-xl mx-4 md:mx-0  ">
       <div id="pokemon-details-left" className="flex flex-col gap-4 max-w-sm w-full items-center">
         <Image
           className={`object-contain ${!pokemon.sprites.other["official-artwork"].front_default && "rounded-full bg-gray-200 dark:bg-sidebar w-64 h-64"}`}
@@ -32,7 +32,9 @@ export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
         <div className="px-4 sm:px-0 w-full">
           <div className="flex gap-2 items-center">
             <h3 className="text-2xl font-semibold leading-7 text-gray-900 dark:text-white">{pokemon && pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
-            <span className="bg-gray-300 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 h-fit rounded dark:bg-gray-700 dark:text-gray-300">#{pokemon.id}</span>
+            <div className="flex items-center justify-center h-5 w-10 border-1 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 rounded-sm ">
+              <p className="text-xs font-medium">#{pokemon?.id}</p>
+            </div>
           </div>
           <div className="flex flex-wrap gap-1 mt-4">
             {pokemon.types.map((type: { type: { name: string } }) => (

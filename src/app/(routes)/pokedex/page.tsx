@@ -3,7 +3,7 @@
 import { useMemo, useEffect, useRef } from "react";
 import { ChevronRightIcon } from "lucide-react";
 
-import { PokeCard, LoadingPokeCard } from "@/components/pokedex/poke-card";
+import { PokeCard, SkeletonPokeCard } from "@/components/pokedex/poke-card";
 import { Pokemon } from "@/types/pokemon";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "motion/react";
@@ -39,31 +39,37 @@ const Pokelist = () => {
 
   return (
     <section className={`p-4 flex flex-col`}>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4  ">
-        {isLoading && Array.from(Array(PAGE_SIZE).keys()).map((index) => <LoadingPokeCard key={index} />)}
+      <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 xl:grid-cols-6 gap-4  ">
+        {isLoading && Array.from(Array(PAGE_SIZE).keys()).map((index) => <SkeletonPokeCard key={index} />)}
         {data &&
           filteredPokemon &&
           filteredPokemon.slice(0, page * PAGE_SIZE).map((pokemon: Pokemon, index: number) => (
-            <motion.div
-              className="w-full"
-              key={pokemon.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: defaultDuration,
-                delay: defaultDelay + (index > 30 ? 0 : index * 0.005),
-                y: { type: "spring", visualDuration: defaultDuration, delay: defaultDelay + (index > 30 ? 0 : index * 0.005), bounce: 0.5 },
-              }}>
-              <PokeCard key={pokemon.name} name={pokemon.name} />
-            </motion.div>
+            <>
+              {/* <SkeletonPokeCard /> */}
+              <motion.div
+                key={pokemon.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: defaultDuration,
+                  delay: defaultDelay + (index > 30 ? 0 : index * 0.005),
+                  y: { type: "spring", visualDuration: defaultDuration, delay: defaultDelay + (index > 30 ? 0 : index * 0.005), bounce: 0.5 },
+                }}>
+                <PokeCard key={pokemon.name} name={pokemon.name} />
+              </motion.div>
+            </>
           ))}
+
+        {filteredPokemon && filteredPokemon.length === 0 && !isLoading && (
+          <h1 className="col-span-full text-center text-gray-500 dark:text-gray-400 scroll-m-20 text-2xl font-semibold tracking-tight mt-64">Es wurden keine Pokemon gefunden.</h1>
+        )}
       </div>
 
-      <div className=" bg-none w-full flex items-center justify-center mx-auto  py-4 gap-4 ">
-        <Button ref={ref} variant={"outline"} className="md:w-28 w-full " size={"lg"} onClick={() => setPage(page + 1)} disabled={page * PAGE_SIZE >= filteredPokemon?.length}>
+      <div ref={ref} className="bg-none w-full flex items-center justify-center mx-auto  py-4 gap-4 ">
+        {/* <Button variant={"outline"} className="md:w-28 w-full " size={"lg"} onClick={() => setPage(page + 1)} disabled={page * PAGE_SIZE >= filteredPokemon?.length}>
           More
           <ChevronRightIcon />
-        </Button>
+        </Button> */}
       </div>
     </section>
   );

@@ -7,7 +7,7 @@ import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
 
 export const SearchForm = () => {
   const router = useRouter();
-  const { search, setSearch, setType } = useStore();
+  const { search, setSearch, setType, setPokemonName } = useStore();
   return (
     <>
       <Label htmlFor="search" className="sr-only">
@@ -23,6 +23,7 @@ export const SearchForm = () => {
         onChange={(e) => {
           setSearch(e.target.value);
           setType(pokemonTypeIcons.all);
+          setPokemonName("");
           router.push("/pokedex");
         }}
       />

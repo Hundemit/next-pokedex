@@ -6,11 +6,17 @@ import { usePokemon } from "@/lib/utils";
 import { Pokemon } from "@/types/pokemon";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useStore } from "@/store/store";
+import { type } from "os";
+import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "../ui/skeleton";
+
 const PokeCard = ({ name }: { name: string }) => {
-  const { data } = usePokemon<Pokemon>(name);
+  const { data: pokemon, isLoading } = usePokemon<Pokemon>(name);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const { setPokemonName } = useStore();
+  const { setPokemonName, setType } = useStore();
   return (
     <>
       <Link
@@ -18,34 +24,97 @@ const PokeCard = ({ name }: { name: string }) => {
         onClick={() => {
           setPokemonName(name.charAt(0).toUpperCase() + name.slice(1));
         }}
-        className="bg-white rounded-lg dark:bg-sidebar border border-gray-100 dark:border-gray-900 flex-col flex items-center justify-center p-2  dark:hover:bg-gray-800 hover:bg-gray-100 hover:scale-101 dark:hover:scale-101 transition-all duration-300">
-        <div className="relative w-32 h-32 mx-auto mt-5">
-          {!imageLoaded && <div className="absolute inset-0 animate-pulse bg-accent dark:bg-muted rounded-full" />}
-          <Image
-            onLoad={() => setImageLoaded(true)}
-            width={128}
-            height={128}
-            className={`object-cover transition-opacity duration-700 w-32 h-32 ${imageLoaded ? "opacity-100 " : "opacity-0 h-0 w-0"}`}
-            src={data?.sprites.other["official-artwork"].front_default || "/"}
-            alt=""
-          />
-        </div>
+        className=" w-full h-full flex-col flex  gap-4  mx-auto items-center justify-center p-2 p-4 bg-white rounded-lg  dark:bg-sidebar border border-gray-100 dark:border-gray-900    dark:hover:bg-gray-800 hover:bg-gray-100 hover:scale-101 dark:hover:scale-101 transition-all duration-300">
+        {!imageLoaded && (
+          <div className="w-32 h-32 mx-auto flex flex-col items-center justify-center">
+            <Skeleton className="rounded-full w-28 h-28 " />
+          </div>
+        )}
+        <Image
+          onLoad={() => setImageLoaded(true)}
+          width={128}
+          height={128}
+          className={`transition-opacity duration-700 sm:w-32 w-64 my-auto ${imageLoaded ? "opacity-100 " : "opacity-0 h-0 w-0"}`}
+          src={pokemon?.sprites.other["official-artwork"].front_default || "/"}
+          alt=""
+        />
 
-        <h5 className="truncate text-xl font-bold tracking-tight text-center text-gray-900 dark:text-white py-5 w-full  ">{name.charAt(0).toUpperCase() + name.slice(1)}</h5>
+        <div className="flex flex-col items-center justify-center w-full">
+          {/* Title and ID */}
+          <div className="flex items-center justify-center gap-2 w-full">
+            <h5 className="truncate text-xl font-bold tracking-tight text-center text-gray-900 dark:text-white wrap-normal overflow-ellipsis ">{name.charAt(0).toUpperCase() + name.slice(1)}</h5>
+
+            {isLoading ? (
+              <Skeleton className="h-5 w-10 rounded-md " />
+            ) : (
+              <>
+                <div className="flex items-center justify-center h-5 px-2.5 border-1 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 rounded-sm ">
+                  <p className="text-xs font-medium">#{pokemon?.id}</p>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Types */}
+          <div className="flex flex-wrap gap-1 my-2">
+            {isLoading ? (
+              <>
+                <Skeleton className="h-5 w-16 rounded-md" />
+              </>
+            ) : (
+              <>
+                {pokemon?.types.map((type: { type: { name: string } }) => (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      setType(pokemonTypeIcons[type.type.name]);
+                      setPokemonName("");
+                      e.stopPropagation();
+                      e.preventDefault();
+                      e.nativeEvent.stopImmediatePropagation();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    style={{
+                      backgroundColor: `${pokemonTypeIcons[type.type.name].color}28`,
+                      color: `${pokemonTypeIcons[type.type.name].color}`,
+                      border: `1px solid ${pokemonTypeIcons[type.type.name].color}`,
+                    }}
+                    className="text-xs h-fit font-medium px-2.5 py-0.5 rounded-md cursor-pointer hover:-translate-y-1 transition-all duration-300"
+                    key={type.type.name}>
+                    {type.type.name}
+                  </button>
+                ))}
+              </>
+            )}
+          </div>
+        </div>
       </Link>
     </>
   );
 };
 
-const LoadingPokeCard = () => {
+const SkeletonPokeCard = () => {
   return (
-    <div className="bg-white rounded-lg dark:bg-sidebar border border-gray-100 dark:border-gray-900 flex-col flex items-center justify-center p-2  dark:hover:bg-gray-800 hover:bg-gray-100 hover:scale-101 dark:hover:scale-101 transition-all duration-300">
-      <div className="relative w-32 h-32 mx-auto mt-5">
-        <div className="absolute inset-0 bg-accent dark:bg-muted rounded-full" />
+    <div className="bg-white dark:bg-sidebar border border-gray-100 dark:border-gray-900 rounded-lg  animate-pulse  w-full flex-col flex gap-0 mx-auto items-center justify-center p-2">
+      {/* Image Placeholder */}
+      <div className=" w-32 h-32 flex flex-col items-center justify-center">
+        <Skeleton className="rounded-full w-28 h-28 " />
       </div>
-      <div className="h-8 w-24 bg-accent dark:bg-muted rounded mt-5 mb-2" />
+
+      <div className="flex flex-col items-center justify-center">
+        {/* Name and ID Placeholder */}
+        <div className="flex items-center justify-center gap-2 ">
+          <Skeleton className="h-5 w-24 rounded-md" />
+          <Skeleton className="w-10 h-5 rounded-md " />
+        </div>
+
+        {/* Types Placeholder */}
+        <div className="flex flex-wrap gap-2 mt-3 justify-center">
+          <Skeleton className="h-5 w-16 rounded-md" />
+        </div>
+      </div>
     </div>
   );
 };
 
-export { PokeCard, LoadingPokeCard };
+export { PokeCard, SkeletonPokeCard };

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
 
 const PokedexHeader = ({ className }: { className?: string }) => {
-  const { type, setType, pokemonName, setPokemonName, setPage } = useStore();
+  const { type, setType, pokemonName, setPokemonName, setPage, setSearch } = useStore();
   const router = useRouter();
   return (
     <header className={`${className}`}>
@@ -26,7 +26,9 @@ const PokedexHeader = ({ className }: { className?: string }) => {
                   setType(pokemonTypeIcons.all);
                   setPokemonName("");
                   setPage(1);
+                  setSearch("");
                   router.push(`/pokedex`);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}>
                 Pokedèx
               </BreadcrumbLink>

@@ -5,6 +5,7 @@ import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Pokemon } from "@/types/pokemon";
+import { log } from "console";
 
 export const description = "A radar chart with dots";
 

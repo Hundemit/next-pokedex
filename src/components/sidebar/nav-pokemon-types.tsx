@@ -1,64 +1,72 @@
 "use client";
 
-import { useMotionStore, useStore } from "@/store/store";
-import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { PokemonType } from "@/lib/pokemon-type-icons";
-import Link from "next/link";
-import { motion } from "motion/react";
+import { X } from "lucide-react";
 
-export function NavPokemonTypes({ pokemonTypes }: { pokemonTypes: PokemonType[] }) {
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton } from "@/components/ui/sidebar";
+import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
+import { useSidebarStore, useStore } from "@/store/store";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { motion } from "motion/react";
+import { log } from "console";
+
+export function NavPokemonTypes() {
+  const router = useRouter();
   const { type, setType, setSearch, setPokemonName, setPage } = useStore();
-  const { defaultDelay, defaultDuration } = useMotionStore();
+  const { isSidebarOpen } = useSidebarStore();
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Pokemon Types</SidebarGroupLabel>
+    <SidebarGroup>
+      <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {pokemonTypes.map((t, index) => (
+        {Object.values(pokemonTypeIcons).map((t, index) => (
           <SidebarMenuItem key={t.buttonName}>
-            {/* TYPE BUTTON */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: defaultDuration,
-                delay: defaultDelay + 0.4 + index * 0.05,
+                duration: 0.5,
+                delay: index * 0.02,
                 y: {
                   type: "spring",
-                  delay: defaultDelay + 0.4 + index * 0.05,
-                  duration: defaultDuration,
+                  delay: index * 0.02,
+                  duration: 0.5,
                   bounce: 0.5,
                 },
               }}>
-              <SidebarMenuButton asChild>
-                <Link
-                  href={`/pokedex`}
-                  role="button"
-                  onClick={() => {
+              <SidebarMenuButton
+                onClick={() => {
+                  router.push(`/pokedex`);
+                  // if the sidebar is closed and the type is the same as the current type, set the type to all
+                  if (!isSidebarOpen && type.name === t.name && t.name !== "all") {
+                    setType(pokemonTypeIcons["all"]);
+                    setSearch("");
+                  } else {
                     setType(t);
                     setSearch("");
                     setPokemonName("");
                     setPage(1);
                     window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                  style={{ "--type-color": `${t.color}26` } as React.CSSProperties}
-                  className={`flex items-center gap-2 rounded transition-colors duration-200 ${type.name === t.name ? "bg-[var(--type-color)]!" : "hover:bg-[var(--type-color)]!"}`}>
-                  <t.icon />
-                  <span>{t.buttonName}</span>
-                  {/* CLOSE BUTTON */}
-                  {/* {type === t.name && t.name !== "" && (
+                  }
+                }}
+                tooltip={t.buttonName}
+                style={{ "--type-color": `${t.color}80` } as React.CSSProperties}
+                className={`transition-colors duration-500 ease-in-out ${type.name === t.name ? "bg-[var(--type-color)]!" : "hover:bg-[var(--type-color)]!"} `}>
+                <t.icon />
+                <span className="mr-auto">{t.buttonName}</span>
+
+                {type.name === t.name && t.name !== "all" && (
                   <div
-                    className="flex items-center gap-2 ml-auto cursor-pointer"
+                    className="flex items-center gap-2 p-1 cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setType("");
+                      setType(pokemonTypeIcons["all"]);
                       setSearch("");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}>
                     <X style={{ "--type-color": t.color } as React.CSSProperties} color="var(--type-color)" className="size-4 " />
                   </div>
-                )} */}
-                </Link>
+                )}
               </SidebarMenuButton>
             </motion.div>
           </SidebarMenuItem>

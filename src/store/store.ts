@@ -35,3 +35,13 @@ export const useMotionStore = create<MotionStore>((set) => ({
   setDefaultDelay: (defaultDelay: number) => set({ defaultDelay }),
   setDefaultDuration: (defaultDuration: number) => set({ defaultDuration }),
 }));
+
+export interface SidebarStore {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (isSidebarOpen: boolean) => void;
+}
+
+export const useSidebarStore = create<SidebarStore>((set) => ({
+  isSidebarOpen: false,
+  setIsSidebarOpen: (isSidebarOpen: boolean) => set({ isSidebarOpen }),
+}));

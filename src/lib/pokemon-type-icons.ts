@@ -144,13 +144,3 @@ export const pokemonTypeIcons: Record<string, PokemonType> = {
     color: "#D48899", // 5% dunkler als #EE99AC
   },
 };
-
-// Helper function to get icon by type name
-export const getPokemonTypeIcon = (typeName: string): PokemonType | undefined => {
-  return pokemonTypeIcons[typeName.toLowerCase()];
-};
-
-// Get all types as array for navigation
-export const getAllPokemonTypes = (): PokemonType[] => {
-  return Object.values(pokemonTypeIcons);
-};

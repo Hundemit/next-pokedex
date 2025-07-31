@@ -18,7 +18,6 @@ export default function LandingPage() {
         className=" w-full flex justify-end p-4">
         <Darkmodebutton />
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -26,7 +25,7 @@ export default function LandingPage() {
           duration: 0.4,
           scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
         }}>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 px-4">
+        <div className="mx-auto max-w-2xl pt-32 sm:pt-48 lg:pt-56 px-4">
           <div className=" mb-8 flex justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 dark:text-white ring-gray-900/10 dark:ring-gray-700 dark:hover:ring-gray-300 hover:ring-gray-900/20">
               Here are more of my projects.{" "}
