@@ -35,7 +35,7 @@ const PokeCard = ({ name }: { name: string }) => {
           width={128}
           height={128}
           className={`transition-opacity duration-700 sm:w-32 w-64 my-auto ${imageLoaded ? "opacity-100 " : "opacity-0 h-0 w-0"}`}
-          src={pokemon?.sprites.other["official-artwork"].front_default || "/"}
+          src={pokemon?.sprites.other["official-artwork"].front_default || "/nothing.png"}
           alt=""
         />
 
