@@ -1,16 +1,13 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { usePokemon } from "@/lib/utils";
 
 import { Pokemon } from "@/types/pokemon";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useStore } from "@/store/store";
-import { type } from "os";
 import { pokemonTypeIcons } from "@/lib/pokemon-type-icons";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "../ui/skeleton";
 
 const PokeCard = ({ name }: { name: string }) => {
@@ -24,7 +21,7 @@ const PokeCard = ({ name }: { name: string }) => {
         onClick={() => {
           setPokemonName(name.charAt(0).toUpperCase() + name.slice(1));
         }}
-        className=" w-full h-full flex-col flex  gap-4  mx-auto items-center justify-center p-2 p-4 bg-white rounded-lg  dark:bg-sidebar border border-gray-100 dark:border-gray-900    dark:hover:bg-gray-800 hover:bg-gray-100 hover:scale-101 dark:hover:scale-101 transition-all duration-300">
+        className=" w-full h-full flex-col flex  gap-4  mx-auto items-center justify-center  p-4 bg-white rounded-lg  dark:bg-sidebar border border-gray-100 dark:border-gray-900    dark:hover:bg-gray-800 hover:bg-gray-100 hover:scale-101 dark:hover:scale-101 transition-all duration-300">
         {!imageLoaded && (
           <div className="w-32 h-32 mx-auto flex flex-col items-center justify-center">
             <Skeleton className="rounded-full w-28 h-28 " />
